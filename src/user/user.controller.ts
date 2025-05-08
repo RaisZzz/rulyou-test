@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -42,5 +43,10 @@ export class UserController {
     @Body() updateDto: UpdateUserDto,
   ): Promise<User> {
     return this.userService.updateUser(getDto, updateDto);
+  }
+
+  @Delete('delete/:id')
+  deleteUser(@Param() getDto: GetUserDto): Promise<User> {
+    return this.userService.deleteUser(getDto);
   }
 }

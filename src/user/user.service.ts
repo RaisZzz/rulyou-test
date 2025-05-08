@@ -59,4 +59,23 @@ export class UserService {
 
     return user;
   }
+
+  async deleteUser(getDto: GetUserDto): Promise<User> {
+    const user: User | null = await this.userRepository.findOne({
+      where: {
+        id: getDto.id,
+      },
+    });
+
+    if (!user) {
+      throw new HttpException(
+        new ErrorResponse(ErrorType.USER_NOT_FOUND),
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    await user.destroy();
+
+    return user;
+  }
 }
