@@ -18,7 +18,7 @@ import { GetUserDto } from './dto/get-user.dto';
 import { User } from './user.model';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-@Controller('user')
+@Controller('')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
