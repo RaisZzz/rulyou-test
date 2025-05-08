@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './user.model';
@@ -8,6 +8,8 @@ import { GetUsersDto } from './dto/get-users.dto';
 import { WhereOptions } from 'sequelize';
 import { GetUserResp } from './resp/get-user.resp';
 import { GetUserDto } from './dto/get-user.dto';
+import { ErrorResponse, ErrorType } from '../common/resp/error.resp';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -34,5 +36,27 @@ export class UserService {
       where: { id: getDto.id },
     });
     return { users: user ? [user] : [] };
+  }
+
+  async updateUser(
+    getDto: GetUserDto,
+    updateDto: UpdateUserDto,
+  ): Promise<User> {
+    const user: User | null = await this.userRepository.findOne({
+      where: {
+        id: getDto.id,
+      },
+    });
+
+    if (!user) {
+      throw new HttpException(
+        new ErrorResponse(ErrorType.USER_NOT_FOUND),
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    await user.update(updateDto);
+
+    return user;
   }
 }
