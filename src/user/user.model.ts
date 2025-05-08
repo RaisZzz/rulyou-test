@@ -15,7 +15,7 @@ export class User extends Model<User, CreateUserDto> {
   id: number;
 
   @Column({ type: DataType.STRING(fullNameLength), allowNull: false })
-  fullName: string;
+  full_name: string;
 
   @Column({ type: DataType.STRING(roleLength), allowNull: false })
   role: string;
