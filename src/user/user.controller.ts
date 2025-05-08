@@ -49,4 +49,9 @@ export class UserController {
   deleteUser(@Param() getDto: GetUserDto): Promise<User> {
     return this.userService.deleteUser(getDto);
   }
+
+  @Delete('delete')
+  deleteAllUsers(): Promise<undefined> {
+    return this.userService.deleteAllUsers();
+  }
 }

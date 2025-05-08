@@ -78,4 +78,9 @@ export class UserService {
 
     return user;
   }
+
+  async deleteAllUsers(): Promise<undefined> {
+    await this.userRepository.destroy({ where: {} });
+    return undefined;
+  }
 }
