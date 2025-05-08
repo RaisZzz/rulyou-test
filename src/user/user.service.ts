@@ -6,6 +6,8 @@ import { CreateUserResp } from './resp/create-user.resp';
 import { GetAllUsersResp } from './resp/get-all-users.resp';
 import { GetUsersDto } from './dto/get-users.dto';
 import { WhereOptions } from 'sequelize';
+import { GetUserResp } from './resp/get-user.resp';
+import { GetUserDto } from './dto/get-user.dto';
 
 @Injectable()
 export class UserService {
@@ -25,5 +27,12 @@ export class UserService {
 
     const users = await this.userRepository.findAll({ where });
     return { users };
+  }
+
+  async getUserById(getDto: GetUserDto): Promise<GetUserResp> {
+    const user: User | null = await this.userRepository.findOne({
+      where: { id: getDto.id },
+    });
+    return { users: user ? [user] : [] };
   }
 }
